@@ -9,11 +9,11 @@ class UrlsController < ApplicationController
   end
 
   def new
-    @url = Url.new(url_params)
+    @url = Url.new
   end
 
   def create
-    @url = Url.create
+    @url = Url.new(url_params)
     @url.shorten
     if @url.save
       redirect_to @url
@@ -26,6 +26,11 @@ class UrlsController < ApplicationController
     @url = Url.find(params[:id])
     @url.destroy
     redirect_to urls_path
+  end
+
+  def short
+    url = Url.find(params[:id])
+    redirect_to url.long_url
   end
 
   private
